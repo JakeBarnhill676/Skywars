@@ -11,17 +11,15 @@ import java.sql.DriverManager;
 public class SQLManager {
 
     private Connection connection;
-    private String host, database, username, password;
-    private int port;
 
     public void connect() {
         try {
             if (!SkyWars.getInstance().getConfig().getBoolean("mysql.enabled")) return;
-            host = SkyWars.getInstance().getConfig().getString("mysql.host");
-            port = SkyWars.getInstance().getConfig().getInt("mysql.port");
-            database = SkyWars.getInstance().getConfig().getString("mysql.database");
-            username = SkyWars.getInstance().getConfig().getString("mysql.root");
-            password = SkyWars.getInstance().getConfig().getString("mysql.password");
+            String host = SkyWars.getInstance().getConfig().getString("mysql.host");
+            int port = SkyWars.getInstance().getConfig().getInt("mysql.port");
+            String database = SkyWars.getInstance().getConfig().getString("mysql.database");
+            String username = SkyWars.getInstance().getConfig().getString("mysql.root");
+            String password = SkyWars.getInstance().getConfig().getString("mysql.password");
             if (connection != null && !connection.isClosed()) {
                 return;
             }
@@ -31,7 +29,7 @@ public class SQLManager {
                     return;
                 }
                 Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
+                connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
             }
         } catch (Exception e) {
             e.printStackTrace();
